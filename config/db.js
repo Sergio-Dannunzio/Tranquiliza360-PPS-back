@@ -8,10 +8,13 @@ const connectDB = async () => {
     });
     console.log('MongoDB connected');
   } catch (err) {
-    console.log("aaaaa")
-    console.error(err.message);
+    console.error('Error connecting to MongoDB:', err.message);
     process.exit(1);
   }
 };
+
+connectDB().then(() => {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+});
 
 module.exports = connectDB;
