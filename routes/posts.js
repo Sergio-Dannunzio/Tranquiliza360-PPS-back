@@ -4,9 +4,9 @@ const router = express.Router();
 
 // Crear un nuevo post
 router.post('/', async (req, res) => {
-  const { title, content, author } = req.body;
+  const { title, content } = req.body;
   try {
-    const post = new Post({ title, content, author });
+    const post = new Post({ title, content });
     await post.save();
     res.status(201).json(post);
   } catch (err) {

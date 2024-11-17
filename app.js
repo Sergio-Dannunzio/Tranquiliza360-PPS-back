@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
-const postRoutes = require('./routes/post');
+const postRoutes = require('./routes/posts');
 
 // Conectar a la base de datos
 connectDB();
