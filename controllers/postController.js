@@ -3,15 +3,19 @@ const Post = require("../models/Post");
 // Crear un nuevo post
 const createPost = async (req, res) => {
   const { title, content } = req.body;
+  const imageUrl = req.file ? req.file.path : null; // URL pública de Cloudinary
+
   try {
     const newPost = new Post({
       title,
       content,
+      imageUrl,
     });
 
     await newPost.save();
     res.status(201).json(newPost);
   } catch (err) {
+    console.log(err.message);
     console.error(err.message);
     res.status(500).send("Error en el servidor");
   }
