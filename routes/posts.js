@@ -1,10 +1,15 @@
 const express = require("express");
 const Post = require("../models/Post");
 const router = express.Router();
-const { getPosts, getPostsbyTitle } = require("../controllers/postController");
+const upload = require("../middleware/upload");
+const {
+  getPosts,
+  getPostsbyTitle,
+  createPost,
+} = require("../controllers/postController");
 
 // Crear un nuevo post
-router.post("/", async (req, res) => {
+/*router.post("/", async (req, res) => {
   const { title, content } = req.body;
   try {
     const post = new Post({ title, content });
@@ -13,7 +18,9 @@ router.post("/", async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-});
+});*/
+
+router.post("/", upload, createPost);
 
 //Obtener todos los posts
 router.get("/", getPosts);
