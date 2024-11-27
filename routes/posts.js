@@ -6,20 +6,11 @@ const {
   getPosts,
   getPostsbyTitle,
   createPost,
+  deletePost,
+  updatePost,
 } = require("../controllers/postController");
 
 // Crear un nuevo post
-/*router.post("/", async (req, res) => {
-  const { title, content } = req.body;
-  try {
-    const post = new Post({ title, content });
-    await post.save();
-    res.status(201).json(post);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});*/
-
 router.post("/", upload, createPost);
 
 //Obtener todos los posts
@@ -28,5 +19,7 @@ router.get("/", getPosts);
 //Obtener post por titulo
 router.get("/:title", getPostsbyTitle);
 // Otros endpoints...
+router.delete("/:_id", deletePost);
 
+router.put("/:_id", upload, updatePost);
 module.exports = router;

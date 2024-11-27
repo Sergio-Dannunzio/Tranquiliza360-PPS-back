@@ -47,21 +47,41 @@ const getPostsbyTitle = async (req, res) => {
 
 // Eliminar un post
 const deletePost = async (req, res) => {
+  const { _id } = req.params;
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(_id);
     if (!post) {
       return res.status(404).json({ msg: "Post no encontrado" });
     }
 
-    if (post.user.toString() !== req.user.id) {
+    /*if (post.user.toString() !== req.user.id) {
       return res.status(403).json({ msg: "No autorizado" });
-    }
+    }*/
 
-    await post.remove();
+    const deltedPost = await Post.deleteOne(post);
     res.json({ msg: "Post eliminado" });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Error en el servidor");
+  }
+};
+
+const updatePost = async (req, res) => {
+  try {
+    const { title, content } = req.body;
+    const imageUrl = req.file ? req.file.path : null;
+    const { _id } = req.params;
+
+    const updatedPost = await Post.findByIdAndUpdate(
+      _id,
+      { title, content, imageUrl },
+      { new: true }
+    );
+
+    res.json(updatedPost);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error al actualizar el post.");
   }
 };
 
@@ -70,4 +90,5 @@ module.exports = {
   createPost,
   getPosts,
   deletePost,
+  updatePost,
 };
