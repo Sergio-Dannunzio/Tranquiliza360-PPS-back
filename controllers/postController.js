@@ -46,9 +46,9 @@ const getPostsbyTitle = async (req, res) => {
 };
 
 const getPostsbyId = async (req, res) => {
-  const { _id } = req.params; // Obtiene el título de los parámetros de ruta
+  const { id } = req.params;
   try {
-    const post = await Post.findOne({ _id });
+    const post = await Post.findById(id);
     if (!post) {
       return res.status(404).json({ message: "Post no encontrado" });
     }

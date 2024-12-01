@@ -20,7 +20,7 @@ router.get("/", getPosts);
 //Obtener post por titulo
 router.get("/:title", getPostsbyTitle);
 //Obtener post por id
-router.get("/:_id", getPostsbyId);
+router.get("/:id", getPostsbyId);
 // Otros endpoints...
 router.delete("/:_id", deletePost);
 
