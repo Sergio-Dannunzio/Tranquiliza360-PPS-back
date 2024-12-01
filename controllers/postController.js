@@ -50,7 +50,7 @@ const getPostsbyId = async (req, res) => {
   try {
     const post = await Post.findById(id);
     if (!post) {
-      return res.status(404).json({ message: "Post no encontrado" });
+      return res.status(404).json({ message: "Post con ese id no encontrado" });
     }
     res.json(post);
   } catch (err) {

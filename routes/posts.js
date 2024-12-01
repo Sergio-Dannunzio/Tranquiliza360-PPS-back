@@ -18,9 +18,10 @@ router.post("/", upload, createPost);
 router.get("/", getPosts);
 
 //Obtener post por titulo
-router.get("/:title", getPostsbyTitle);
+router.get("/title/:title", getPostsbyTitle);
 //Obtener post por id
-router.get("/:id", getPostsbyId);
+router.get("/id/:id", getPostsbyId);
+
 // Otros endpoints...
 router.delete("/:_id", deletePost);
 
