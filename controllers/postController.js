@@ -45,6 +45,19 @@ const getPostsbyTitle = async (req, res) => {
   }
 };
 
+const getPostsbyId = async (req, res) => {
+  const { _id } = req.params; // Obtiene el título de los parámetros de ruta
+  try {
+    const post = await Post.findOne({ _id });
+    if (!post) {
+      return res.status(404).json({ message: "Post no encontrado" });
+    }
+    res.json(post);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 // Eliminar un post
 const deletePost = async (req, res) => {
   const { _id } = req.params;
@@ -87,6 +100,7 @@ const updatePost = async (req, res) => {
 
 module.exports = {
   getPostsbyTitle,
+  getPostsbyId,
   createPost,
   getPosts,
   deletePost,
