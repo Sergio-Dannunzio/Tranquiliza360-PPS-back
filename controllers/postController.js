@@ -2,12 +2,13 @@ const Post = require("../models/Post");
 
 // Crear un nuevo post
 const createPost = async (req, res) => {
-  const { title, content } = req.body;
+  const { title, content, autor } = req.body;
   const imageUrl = req.file ? req.file.path : null; // URL pública de Cloudinary
 
   try {
     const newPost = new Post({
       title,
+      autor,
       content,
       imageUrl,
     });
@@ -66,13 +67,12 @@ const deletePost = async (req, res) => {
     if (!post) {
       return res.status(404).json({ msg: "Post no encontrado" });
     }
-
     /*if (post.user.toString() !== req.user.id) {
       return res.status(403).json({ msg: "No autorizado" });
     }*/
-
     const deltedPost = await Post.deleteOne(post);
     res.json({ msg: "Post eliminado" });
+    return deltedPost;
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Error en el servidor");
@@ -81,17 +81,18 @@ const deletePost = async (req, res) => {
 
 const updatePost = async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, autor } = req.body;
     const imageUrl = req.file ? req.file.path : null;
     const { _id } = req.params;
 
     const updatedPost = await Post.findByIdAndUpdate(
       _id,
-      { title, content, imageUrl },
+      { title, content, autor, imageUrl },
       { new: true }
     );
 
     res.json(updatedPost);
+    return updatedPost;
   } catch (err) {
     console.error(err);
     res.status(500).send("Error al actualizar el post.");
