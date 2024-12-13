@@ -3,6 +3,7 @@ const Post = require("../models/Post");
 const router = express.Router();
 const upload = require("../middleware/upload");
 const {
+  getLatestPosts,
   getPosts,
   getPostsbyTitle,
   getPostsbyId,
@@ -21,6 +22,8 @@ router.get("/", getPosts);
 router.get("/title/:title", getPostsbyTitle);
 //Obtener post por id
 router.get("/id/:id", getPostsbyId);
+//Obtener el post mas reciente
+router.get("/latest-post", getLatestPosts);
 
 // Otros endpoints...
 router.delete("/:_id", deletePost);

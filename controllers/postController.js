@@ -32,7 +32,16 @@ const getPosts = async (req, res) => {
     return res.status(500).send("Error en el servidor");
   }
 };
-
+////Obtener el post mas reciente
+const getLatestPosts = async (req, res) => {
+  try {
+    const posts = await Post.findOne().sort({ createdAt: -1 });
+    return res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send("Error en el servidor");
+  }
+};
 const getPostsbyTitle = async (req, res) => {
   const { title } = req.params; // Obtiene el título de los parámetros de ruta
   try {
@@ -100,6 +109,7 @@ const updatePost = async (req, res) => {
 };
 
 module.exports = {
+  getLatestPosts,
   getPostsbyTitle,
   getPostsbyId,
   createPost,
