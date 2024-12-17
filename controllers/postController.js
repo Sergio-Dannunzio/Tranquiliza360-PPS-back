@@ -49,7 +49,6 @@ const getPagination = async (req, res) => {
     res.status(200).json({
       posts,
       currentPage: page,
-      totalPages: Math.ceil(totalPosts / limit),
     });
   } catch (error) {
     console.error(error);
