@@ -46,10 +46,7 @@ const getPagination = async (req, res) => {
       .skip(skip)
       .limit(limit);
 
-    res.status(200).json({
-      posts,
-      currentPage: page,
-    });
+    return res.json(posts);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error al obtener los posts." });
