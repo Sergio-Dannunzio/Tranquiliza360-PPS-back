@@ -3,6 +3,7 @@ const Post = require("../models/Post");
 const router = express.Router();
 const upload = require("../middleware/upload");
 const {
+  getPagination,
   getLatestPosts,
   getPosts,
   getPostsbyTitle,
@@ -17,7 +18,7 @@ router.post("/", upload, createPost);
 
 //Obtener todos los posts
 router.get("/", getPosts);
-
+router.get("/paginated", getPagination);
 //Obtener post por titulo
 router.get("/title/:title", getPostsbyTitle);
 //Obtener post por id

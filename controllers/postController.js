@@ -32,7 +32,39 @@ const getPosts = async (req, res) => {
     return res.status(500).send("Error en el servidor");
   }
 };
-////Obtener el post mas reciente
+
+// Obtener un post paginados
+const getPagination = async (req, res) => {
+  try {
+    // Obtener página y límite desde los parámetros de la consulta (query params)
+    const page = parseInt(req.query.page) || 1; // Página actual, por defecto 1
+    const limit = parseInt(req.query.limit) || 10; // Número de posts por página, por defecto 10
+
+    // Calcular el índice de inicio
+    const skip = (page - 1) * limit;
+
+    // Consultar posts con paginación
+    const posts = await Post.find()
+      .sort({ createdAt: -1 }) // Ordenar por fecha de creación descendente
+      .skip(skip) // Saltar los posts ya mostrados
+      .limit(limit); // Limitar la cantidad de posts por página
+
+    // Calcular el total de posts en la colección
+    const totalPosts = await Post.countDocuments();
+
+    // Enviar respuesta con los datos de paginación
+    res.status(200).json({
+      posts,
+      currentPage: page,
+      totalPages: Math.ceil(totalPosts / limit),
+      totalPosts,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al obtener los posts." });
+  }
+};
+// Obtener el post mas reciente
 const getLatestPosts = async (req, res) => {
   try {
     const posts = await Post.findOne().sort({ createdAt: -1 });
@@ -109,6 +141,7 @@ const updatePost = async (req, res) => {
 };
 
 module.exports = {
+  getPagination,
   getLatestPosts,
   getPostsbyTitle,
   getPostsbyId,
