@@ -18,6 +18,7 @@ router.post("/", upload, createPost);
 
 //Obtener todos los posts
 router.get("/", getPosts);
+// obtener los post paginados
 router.get("/paginated", getPagination);
 //Obtener post por titulo
 router.get("/title/:title", getPostsbyTitle);
